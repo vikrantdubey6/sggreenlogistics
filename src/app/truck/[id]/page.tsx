@@ -1,6 +1,7 @@
 import { fetchTruckData } from '@/api/route';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface PageProps {
     params: Promise<{ id: string }>;
@@ -24,8 +25,15 @@ export default async function TruckPage(props: PageProps) {
 
                 {/* Header */}
                 <div className="bg-slate-900 text-white p-6 text-center">
-                    <h1 className="text-2xl font-bold tracking-wide uppercase">Truck Information</h1>
+                     <Image
+        src="/logo.jpeg"
+        alt="SG Green Logistics Logo"
+        width={150}
+        height={100}
+        className="mx-auto mb-2 object-contain"
+    />
                     <p className="text-slate-400 text-sm mt-1">SG Green Logistics</p>
+                    <h1 className="text-2xl font-bold tracking-wide uppercase">Truck Information</h1>
                 </div>
 
                 {/* Content */}

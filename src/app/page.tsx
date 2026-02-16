@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function Home() {
   const [truckId, setTruckId] = useState('');
@@ -17,6 +18,13 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4">
       <div className="max-w-md w-full bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+        <Image
+                src="/logo.jpeg"
+                alt="SG Green Logistics Logo"
+                width={150}
+                height={100}
+                className="mx-auto mb-2 object-contain"
+            />
         <h1 className="text-2xl font-bold text-slate-900 mb-6 text-center">Truck Lookup System</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
