@@ -36,7 +36,7 @@ export default function Home() {
               id="truckId"
               value={truckId}
               onChange={(e) => setTruckId(e.target.value)}
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+              className="w-full px-4 py-2 border text-black border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
               placeholder="e.g., TRK001"
               required
             />
