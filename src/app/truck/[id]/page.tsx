@@ -2,6 +2,7 @@ import { fetchTruckData } from '@/api/route';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import QRGenerator from '../../../components/QRGenerator';
 
 interface PageProps {
     params: Promise<{ id: string }>;
@@ -20,18 +21,30 @@ export default async function TruckPage(props: PageProps) {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col items-center py-10 px-4">
-            <div className="max-w-md w-full bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+        <div className="min-h-screen bg-gray-50 flex flex-col items-center py-10 px-4 relative">
+
+            <Link
+                href="/"
+                className="absolute top-4 left-4 flex items-center gap-2 text-slate-600 hover:text-slate-900 transition-colors bg-white/80 backdrop-blur-sm px-4 py-2 rounded-lg shadow-sm"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M19 12H5"></path>
+                    <path d="M12 19l-7-7 7-7"></path>
+                </svg>
+                <span className="font-medium text-sm">Back</span>
+            </Link>
+
+            <div className="max-w-md w-full bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 mt-8">
 
                 {/* Header */}
                 <div className="bg-slate-900 text-white p-6 text-center">
-                     <Image
-        src="/logo.jpeg"
-        alt="SG Green Logistics Logo"
-        width={150}
-        height={100}
-        className="mx-auto mb-2 object-contain"
-    />
+                    <Image
+                        src="/logo.jpeg"
+                        alt="SG Green Logistics Logo"
+                        width={150}
+                        height={100}
+                        className="mx-auto mb-2 object-contain"
+                    />
                     <p className="text-slate-400 text-sm mt-1">SG Green Logistics</p>
                     <h1 className="text-2xl font-bold tracking-wide uppercase">Truck Information</h1>
                 </div>
@@ -70,6 +83,10 @@ export default async function TruckPage(props: PageProps) {
                                 {truck.plant_location || 'N/A'}
                             </span>
                         </div>
+                    </div>
+
+                    <div className="flex justify-center pt-4">
+                        <QRGenerator truckId={truck.truck_id || id} />
                     </div>
 
                 </div>

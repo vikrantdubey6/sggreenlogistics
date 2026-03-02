@@ -3,9 +3,12 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
+const QRScanner = dynamic(() => import('../components/QRScanner'), { ssr: false });
 
 export default function Home() {
   const [truckId, setTruckId] = useState('');
+  const [showScanner, setShowScanner] = useState(false);
   const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -19,13 +22,14 @@ export default function Home() {
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4">
       <div className="max-w-md w-full bg-white p-8 rounded-xl shadow-lg border border-gray-100">
         <Image
-                src="/logo.jpeg"
-                alt="SG Green Logistics Logo"
-                width={150}
-                height={100}
-                className="mx-auto mb-2 object-contain"
-            />
+          src="/logo.jpeg"
+          alt="SG Green Logistics Logo"
+          width={150}
+          height={100}
+          className="mx-auto mb-2 object-contain"
+        />
         <h1 className="text-2xl font-bold text-slate-900 mb-6 text-center">Truck Lookup System</h1>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="truckId" className="block text-sm font-medium text-slate-700 mb-1">
@@ -48,10 +52,38 @@ export default function Home() {
             View Truck Details
           </button>
         </form>
+
+        <div className="mt-4 flex flex-col gap-3">
+          <div className="relative flex items-center py-2">
+            <div className="flex-grow border-t border-gray-200"></div>
+            <span className="flex-shrink-0 mx-4 text-gray-400 text-xs">OR</span>
+            <div className="flex-grow border-t border-gray-200"></div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setShowScanner(true)}
+            className="w-full flex items-center justify-center gap-2 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium py-2.5 px-4 rounded-lg transition-colors"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 7V5a2 2 0 0 1 2-2h2"></path>
+              <path d="M17 3h2a2 2 0 0 1 2 2v2"></path>
+              <path d="M21 17v2a2 2 0 0 1-2 2h-2"></path>
+              <path d="M7 21H5a2 2 0 0 1-2-2v-2"></path>
+            </svg>
+            Scan QR Code
+          </button>
+        </div>
+
         <div className="mt-8 pt-6 border-t border-gray-100 text-center">
           <p className="text-xs text-gray-400">Scan a QR code or enter ID manually</p>
         </div>
       </div>
+
+
+      {showScanner && (
+        <QRScanner onClose={() => setShowScanner(false)} />
+      )}
     </div>
   );
 }
