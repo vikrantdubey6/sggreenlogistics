@@ -260,7 +260,7 @@ export default function QRGenerator({ truckId }: QRGeneratorProps) {
                                         letterSpacing: "1px",
                                     }}
                                 >
-                                    011-111-000-1
+                                    +91 92203 39980
                                 </div>
                             </div>
                         </div>
