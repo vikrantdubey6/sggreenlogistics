@@ -7,14 +7,20 @@ import dynamic from 'next/dynamic';
 const QRScanner = dynamic(() => import('../components/QRScanner'), { ssr: false });
 
 export default function Home() {
-  const [truckId, setTruckId] = useState('');
+  const [searchId, setSearchId] = useState('');
   const [showScanner, setShowScanner] = useState(false);
   const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (truckId.trim()) {
-      router.push(`/truck/${truckId.trim()}`);
+    const id = searchId.trim();
+    if (id) {
+      // Determine if it's an Asset ID or Truck ID based on common prefixes like 'AST'
+      if (id.toUpperCase().startsWith('AST') || id.toUpperCase().startsWith('IT')) {
+        router.push(`/asset/${id}`);
+      } else {
+        router.push(`/truck/${id}`);
+      }
     }
   };
 
@@ -32,16 +38,16 @@ export default function Home() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="truckId" className="block text-sm font-medium text-slate-700 mb-1">
-              Enter Truck ID
+            <label htmlFor="searchId" className="block text-sm font-medium text-slate-700 mb-1">
+              Enter Truck or Asset ID
             </label>
             <input
               type="text"
-              id="truckId"
-              value={truckId}
-              onChange={(e) => setTruckId(e.target.value)}
+              id="searchId"
+              value={searchId}
+              onChange={(e) => setSearchId(e.target.value)}
               className="w-full px-4 py-2 border text-black border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-              placeholder="e.g., TRK001"
+              placeholder="e.g., TRK001 or AST001"
               required
             />
           </div>
