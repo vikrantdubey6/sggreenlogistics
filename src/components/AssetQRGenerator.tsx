@@ -100,7 +100,7 @@ export default function AssetQRGenerator({ assetId }: AssetQRGeneratorProps) {
                         <rect x="2" y="7" width="20" height="14" rx="2" />
                         <path d="M16 3h-8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z" />
                     </svg>
-                    Download Asset Tag
+                    Download ID Card
                 </button>
             </div>
 
@@ -108,160 +108,53 @@ export default function AssetQRGenerator({ assetId }: AssetQRGeneratorProps) {
                 Scan to view this asset&apos;s details instantly
             </p>
 
-            {/* ─── Hidden ID Card ─── All inline styles, zero Tailwind to avoid html2canvas lab() bug */}
+            {/* ─── Hidden Asset ID Card ─── All inline styles, zero Tailwind to avoid html2canvas lab() bug */}
             <div style={{ position: "fixed", left: "-9999px", top: 0 }}>
                 <div
                     ref={tagRef}
                     style={{
-                        width: "720px",
-                        height: "380px",
-                        padding: "18px",
+                        width: "400px",
+                        padding: "32px 32px 28px 32px",
                         backgroundColor: "#ffffff",
-                        backgroundImage: `
-  radial-gradient(240px 240px at top left,
-    rgba(0,153,153,0.35) 0%,
-    rgba(0,153,153,0.20) 40%,
-    rgba(0,153,153,0.08) 65%,
-    rgba(0,153,153,0.00) 80%
-  ),
-  radial-gradient(240px 240px at bottom right,
-    rgba(0,153,153,0.35) 0%,
-    rgba(0,153,153,0.20) 40%,
-    rgba(0,153,153,0.08) 65%,
-    rgba(0,153,153,0.00) 80%
-  )
-`,
-                        backgroundRepeat: "no-repeat",
                         boxSizing: "border-box",
                         fontFamily: "Arial Black, Arial, Helvetica, sans-serif",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: "16px",
                     }}
                 >
+                    {/* QR code with logo in the middle */}
+                    <div style={{ background: "#fff", padding: "6px" }}>
+                        <QRCodeCanvas
+                            value={qrValue}
+                            size={280}
+                            level="H"
+                            includeMargin={false}
+                            fgColor="#000000"
+                            bgColor="#ffffff"
+                            imageSettings={{
+                                src: "/favicon.ico",
+                                x: undefined,
+                                y: undefined,
+                                height: 36,
+                                width: 36,
+                                excavate: true,
+                            }}
+                        />
+                    </div>
+
+                    {/* Asset ID below */}
                     <div
                         style={{
-                            width: "100%",
-                            height: "100%",
-                            border: "3px solid #000",
-                            borderRadius: "10px",
-                            display: "flex",
-                            padding: "26px",
-                            boxSizing: "border-box",
+                            fontSize: "36px",
+                            fontWeight: "900",
+                            letterSpacing: "5px",
+                            color: "#000",
+                            textAlign: "center",
                         }}
                     >
-                        {/* LEFT SECTION */}
-                        <div
-                            style={{
-                                width: "44%",
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                gap: "12px",
-                            }}
-                        >
-                            <div style={{ background: "#fff", padding: "6px" }}>
-                                <QRCodeCanvas
-                                    value={qrValue}
-                                    size={200}
-                                    level="H"
-                                    includeMargin={false}
-                                    fgColor="#000000"
-                                    bgColor="#ffffff"
-                                />
-                            </div>
-
-                            <div
-                                style={{
-                                    fontSize: "44px",
-                                    fontWeight: "900",
-                                    letterSpacing: "5px",
-                                    color: "#000",
-                                }}
-                            >
-                                {assetId}
-                            </div>
-                        </div>
-
-                        {/* RIGHT SECTION */}
-                        <div
-                            style={{
-                                flex: 1,
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                paddingLeft: "28px",
-                                textAlign: "center",
-                                color: "#000",
-                            }}
-                        >
-                            {/* PROPERTY OF */}
-                            <div
-                                style={{
-                                    fontSize: "30px",
-                                    fontWeight: "900",
-                                    letterSpacing: "2px",
-                                }}
-                            >
-                                PROPERTY OF
-                            </div>
-
-                            {/* LOGO BOX */}
-                            <div
-                                style={{
-                                    width: "100%",
-                                    border: "2px solid #000",
-                                    padding: "10px 18px",
-                                    background: "#fff",
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    minHeight: "90px",
-                                }}
-                            >
-                                <img
-                                    src="/logo.jpeg"
-                                    alt="SG Green Logistics"
-                                    style={{
-                                        height: "68px",
-                                        objectFit: "contain",
-                                    }}
-                                />
-                            </div>
-
-                            {/* ASSISTANCE TEXT */}
-                            <div style={{ lineHeight: "1.4" }}>
-                                <div
-                                    style={{
-                                        fontSize: "18px",
-                                        fontWeight: "900",
-                                        letterSpacing: "0.8px",
-                                    }}
-                                >
-                                    FOR FURTHER ASSISTANCE
-                                </div>
-
-                                <div
-                                    style={{
-                                        fontSize: "18px",
-                                        fontWeight: "900",
-                                        letterSpacing: "0.8px",
-                                    }}
-                                >
-                                    PLEASE CALL
-                                </div>
-
-                                <div
-                                    style={{
-                                        fontSize: "22px",
-                                        fontWeight: "900",
-                                        marginTop: "6px",
-                                        letterSpacing: "1px",
-                                    }}
-                                >
-                                    +91 92203 39980
-                                </div>
-                            </div>
-                        </div>
+                        {assetId}
                     </div>
                 </div>
             </div>
