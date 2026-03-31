@@ -55,7 +55,7 @@ export default function Home() {
             type="submit"
             className="w-full bg-slate-900 hover:bg-slate-800 text-white font-medium py-2.5 px-4 rounded-lg transition-colors"
           >
-            View Truck Details
+            View Details
           </button>
         </form>
 
