@@ -110,7 +110,7 @@ export default function QRGenerator({ truckId }: QRGeneratorProps) {
                 Scan to view this truck&apos;s details instantly
             </p>
 
-            {/* ─── Hidden ID Card ─── All inline styles, zero Tailwind to avoid html2canvas lab() bug */}
+            {/* ─── Hidden ID Card ─── */}
             <div style={{ position: "fixed", left: "-9999px", top: 0 }}>
                 <div
                     ref={idCardRef}
