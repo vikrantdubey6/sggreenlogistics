@@ -12,22 +12,21 @@ export default function QRScanner({ onClose }: { onClose: () => void }) {
         if (detectedCodes && detectedCodes.length > 0) {
             const code = detectedCodes[0].rawValue;
             if (code) {
-                
+                const assetPrefixes = ['LAP', 'DSK', 'PRT', 'SCN', 'MON', 'UPS', 'HHD', 'INT'];
                 try {
                     // Check if it's a URL
                     if (code.startsWith('http')) {
                         const url = new URL(code);
-                        // Verify it's a truck URL
-
-                        if (url.pathname.includes('/truck/')) {
+                        if (url.pathname.includes('/asset/') || url.pathname.includes('/truck/')) {
                             router.push(url.pathname);
                             onClose();
                         } else {
-                            setError('Scanned code is not a valid truck URL');
+                            setError('Scanned code is not a valid QR code');
                         }
                     } else {
-                        // Assume it is a direct ID
-                        router.push(`/truck/${code}`);
+                        // Direct ID — route based on prefix
+                        const isAsset = assetPrefixes.some(prefix => code.toUpperCase().startsWith(prefix));
+                        router.push(isAsset ? `/asset/${code}` : `/truck/${code}`);
                         onClose();
                     }
                 } catch (err) {

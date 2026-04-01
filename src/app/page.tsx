@@ -15,8 +15,9 @@ export default function Home() {
     e.preventDefault();
     const id = searchId.trim();
     if (id) {
-      // Determine if it's an Asset ID or Truck ID based on common prefixes like 'AST'
-      if (id.toUpperCase().startsWith('AST') || id.toUpperCase().startsWith('IT')) {
+      const assetPrefixes = ['LAP', 'DSK', 'PRT', 'SCN', 'MON', 'UPS', 'HHD', 'INT'];
+      const isAsset = assetPrefixes.some(prefix => id.toUpperCase().startsWith(prefix));
+      if (isAsset) {
         router.push(`/asset/${id}`);
       } else {
         router.push(`/truck/${id}`);
@@ -47,7 +48,7 @@ export default function Home() {
               value={searchId}
               onChange={(e) => setSearchId(e.target.value)}
               className="w-full px-4 py-2 border text-black border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-              placeholder="e.g., TRK001 or AST001"
+              placeholder="e.g., TRK001 or LAP001"
               required
             />
           </div>
